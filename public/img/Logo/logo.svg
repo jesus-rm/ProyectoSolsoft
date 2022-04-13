@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="11.47079mm"
+   height="11.578033mm"
+   viewBox="0 0 11.47079 11.578034"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   sodipodi:docname="logo.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#999999"
+     borderopacity="1"
+     inkscape:pageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     showguides="true"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="7.5544332"
+     inkscape:cx="3.1107562"
+     inkscape:cy="22.304784"
+     inkscape:window-width="1366"
+     inkscape:window-height="715"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer2"
+     inkscape:guide-bbox="true">
+    <sodipodi:guide
+       position="13.203888,-0.8903628"
+       orientation="0,-1"
+       id="guide2898" />
+  </sodipodi:namedview>
+  <defs
+     id="defs2" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Capa 2"
+     transform="translate(-122.33453,-77.196789)">
+    <path
+       id="path3562"
+       style="fill:#ffffff;fill-rule:evenodd;stroke-width:0.955272"
+       d="m 127.30648,80.012448 c -4.26466,2.664513 -0.73338,6.126762 -0.73338,6.126762 -2.40846,0.109998 -4.04186,-1.650482 -4.09155,-3.396686 -0.0498,-1.746217 1.14873,-3.713136 4.14888,-4.943948 2.77417,-1.138094 6.9596,-0.494828 7.06055,0.546722 0,0 -2.11984,-0.997363 -6.3845,1.66715 z"
+       sodipodi:nodetypes="zcsscz" />
+    <ellipse
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.215502;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       id="path44"
+       cx="128.17851"
+       cy="83.08387"
+       rx="2.636183"
+       ry="2.6365559" />
+    <path
+       id="path1142"
+       style="fill:#ffffff;fill-rule:evenodd;stroke-width:0.955272"
+       d="m 128.81299,86.178195 c 4.71611,-2.497888 1.12573,-6.066944 1.12573,-6.066944 2.41055,0.04506 3.9274,1.9069 3.86473,3.652687 -0.0625,1.745805 -1.42848,3.510667 -4.45813,4.667008 -2.15013,0.82065 -6.97701,0.04641 -7.01079,-0.999479 0,0 1.76235,1.244614 6.47846,-1.253272 z"
+       sodipodi:nodetypes="zcsscz" />
+  </g>
+</svg>

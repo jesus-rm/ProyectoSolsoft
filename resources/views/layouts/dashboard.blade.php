@@ -70,7 +70,9 @@
                     <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                         <img src="{{ asset('img/Avatars/user-1.jpg') }}" alt="user-image" class="rounded-circle">
                         <span class="pro-user-name ms-1">
-                            {{ Auth::user()->name }}
+                            {{ Auth::user()->nombre }}
+                            {{ Auth::user()->apellidoPaterno }}
+                            {{ Auth::user()->apellidoMaterno }}
                             <i class="mdi mdi-chevron-down"></i> 
                         </span>
                     </a>
@@ -132,7 +134,10 @@
 
                 <div class="user-box text-center">
                     <img src="{{ asset('img/Avatars/user-1.jpg') }}" alt="user-img" title="Mat Helme" class="rounded-circle img-thumbnail avatar-md">
-                    <p class="text-muted left-user-info">{{ Auth::user()->name }}</p>
+                    <p class="text-muted left-user-info">
+                        {{ Auth::user()->nombre }}
+                        {{ Auth::user()->apellidoPaterno }}
+                        {{ Auth::user()->apellidoMaterno }}</p>
                 </div>
                 @include('dashboard.menuLateral')
                 <div class="clearfix"></div>

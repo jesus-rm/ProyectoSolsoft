@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id('personaId');
+            $table->id();
             $table->string('nombre',35);
             $table->string('apellidoPaterno',25);
             $table->string('apellidoMaterno',25)->nullable();
@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('celular',10);
             $table->string('email',80)->unique();
             $table->tinyInteger('edad');
-            $table->string('password',32);
+            $table->string('password');
             $table->foreignId('estado_id')->constrained('estados','estadoId')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('municipio_id')->constrained('municipios','municipioId')->onDelete('cascade')->onUpdate('cascade');
             $table->string('avatar')->default('default.png');

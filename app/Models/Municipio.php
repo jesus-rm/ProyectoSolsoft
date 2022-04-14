@@ -12,7 +12,7 @@ class Municipio extends Model
     protected $fillable = [
         'claveMunicipio',
         'nombreMunicipio',
-        'clave_estado'
+        'estado_id'
     ];
 
     //Relacion Uno a Muchos (One to Many) Inversa

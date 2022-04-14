@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id('personaId');
-            $table->string('nombre',25);
+            $table->string('nombre',35);
             $table->string('apellidoPaterno',25);
             $table->string('apellidoMaterno',25)->nullable();
             $table->date('fechaNacimiento');
@@ -29,6 +29,7 @@ return new class extends Migration
             $table->foreignId('estado_id')->constrained('estados','estadoId')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('municipio_id')->constrained('municipios','municipioId')->onDelete('cascade')->onUpdate('cascade');
             $table->string('avatar')->default('default.png');
+            $table->dateTime("dateLogin")->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

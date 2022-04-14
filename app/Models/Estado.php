@@ -11,6 +11,17 @@ class Estado extends Model
 
     protected $fillable = [
         'claveEstado',
-        'nombreEstado'
+        'nombreEstado',
+        'codigoEstado'
     ];
+
+    // Relacion Uno a Muchos (One to Many)
+    public function municipios(){
+        return $this.hasMany('App\Models\Municipio');
+    }
+
+    // Relacion Uno a Muchos (One to Many)
+    public function users(){
+        return $this.hasMany('App\Models\User');
+    }
 }

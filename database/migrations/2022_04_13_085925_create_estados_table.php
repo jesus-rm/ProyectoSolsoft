@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('estados', function (Blueprint $table) {
             $table->id('estadoId');
             $table->string('claveEstado',4)->unique();
+            $table->string('codigoEstado',4)->unique();
             $table->string('nombreEstado',35);
             $table->timestamps();
         });

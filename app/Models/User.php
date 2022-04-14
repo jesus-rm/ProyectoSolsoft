@@ -31,7 +31,8 @@ class User extends Authenticatable
         'password',
         'estado_id',
         'municipio_id',
-        'avatar'
+        'avatar',
+        'dateLogin'
     ];
 
     /**
@@ -52,4 +53,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    //Relacion Uno a Muchos (One to Many) Inversa
+    public function estado(){
+        return $this.belongsTo('App\Models\Estado');
+    }
+
+    //Relacion Uno a Muchos (One to Many) Inversa
+    public function municipio(){
+        return $this.belongsTo('App\Models\Municipio');
+    }
 }

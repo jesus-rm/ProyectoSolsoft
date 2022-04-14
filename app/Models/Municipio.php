@@ -14,4 +14,14 @@ class Municipio extends Model
         'nombreMunicipio',
         'clave_estado'
     ];
+
+    //Relacion Uno a Muchos (One to Many) Inversa
+    public function estado(){
+        return $this.belongsTo('App\Models\Estado');
+    }
+
+    // Relacion Uno a Muchos (One to Many)
+    public function users(){
+        return $this.hasMany('App\Models\User');
+    }
 }

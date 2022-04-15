@@ -13,26 +13,15 @@
     <script src="{{ asset('libs/jquery/jquery-3.6.0.js') }}"></script>
     <script src="{{ asset('libs/bootstrap/bootstrap.bundle.js') }}"></script>
     <script src="{{ asset('libs/node-waves/waves.min.js') }}"></script>
-    <script src="{{ asset('libs/waypoints/lib/jquery.waypoints.js') }}"></script>
-    <script src="{{ asset('libs/jquery.counterup/jquery.counterup.js') }}"></script>
     <script src="{{ asset('libs/feather-icons/feather.js') }}"></script>
-    <script src="{{ asset('libs/jquery-knob/jquery-knob.js') }}"></script>
     <script src="{{ asset('js/app.min.js') }}" defer></script>
-    <!-- <script src="{{ asset('js/app.js') }}"></script> -->
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    <link href="{{ asset('fonts/feather.ttf') }}">
-    <link href="{{ asset('fonts/feather.woff') }}">
-    <link href="{{ asset('fonts/materialdesignicons-webfont.ttf') }}">
-    <link href="{{ asset('fonts/materialdesignicons-webfont.woff') }}">
-    <link href="{{ asset('fonts/materialdesignicons-webfont.woff2') }}">
-
 
     <!-- Styles -->
     <link href="{{ asset('css/app.min.css') }}" rel="stylesheet" type="text/css" id="app-style">
-    <!-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> -->
     <link href="{{ asset('css/icons.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('css/estilos.css') }}" rel="stylesheet" type="text/css">
 </head>
@@ -147,9 +136,7 @@
         <div class="content-page">
             <div class="content">
                 <div class="container-fluid">
-                    <div class="row">
-                        @yield('content')
-                    </div>
+                    @yield('content')
                 </div>
             </div>
         </div>

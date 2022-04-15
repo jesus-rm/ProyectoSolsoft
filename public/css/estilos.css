@@ -5,7 +5,7 @@ body.authentication-bg {
 	background-position: bottom!important;
 }
 
-.text-muted,
+/* .text-muted,
 .text-muted b{
     color: #ffffff!important;
     font-weight: 700!important;
@@ -19,7 +19,7 @@ a.text-muted:hover,
 .text-muted b:hover{
     color: #cacfff!important;
     text-decoration: underline;
-}
+} */
 
 
 /* Blazor */

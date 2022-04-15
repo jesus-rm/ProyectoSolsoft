@@ -16,7 +16,7 @@
     <script src="{{ asset('libs/waypoints/lib/jquery.waypoints.js') }}"></script>
     <script src="{{ asset('libs/jquery.counterup/jquery.counterup.js') }}"></script>
     <script src="{{ asset('libs/feather-icons/feather.js') }}"></script>
-    <script src="{{ asset('libs/jquery-knob/jquery.knob.js') }}"></script>
+    <script src="{{ asset('libs/jquery-knob/jquery-knob.js') }}"></script>
     <script src="{{ asset('js/app.min.js') }}" defer></script>
     <!-- <script src="{{ asset('js/app.js') }}"></script> -->
 
@@ -148,9 +148,7 @@
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-sm-12">
-                            @yield('content')
-                        </div>
+                        @yield('content')
                     </div>
                 </div>
             </div>

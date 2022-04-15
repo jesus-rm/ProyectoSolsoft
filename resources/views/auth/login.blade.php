@@ -66,12 +66,6 @@
                             </a>
                         @endif
                     </p>
-                    <p class="text-muted">
-                        {{ __('Don’t have an account?') }}
-                        <a href="{{ route('register') }}" class="text-dark ms-1">
-                            <b>{{ __('Register') }}</b>
-                        </a>
-                    </p>
                 </div>
             </div>
         </div>

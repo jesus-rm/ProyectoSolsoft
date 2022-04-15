@@ -97,7 +97,7 @@
             </ul>
 
             <div class="logo-box">
-                <a href="{{ url('/home') }}" class="logo logo-light text-center">
+                <a href="{{ route('dashboard.inicio') }}" class="logo logo-light text-center">
                     <span class="logo-sm">
                         <img src="{{ asset('img/Logo/logo-sm.svg') }}" alt="" height="29">
                     </span>
@@ -105,7 +105,7 @@
                         <img src="{{ asset('img/Logo/logo-light.svg') }}" alt="" height="23">
                     </span>
                 </a>
-                <a href="{{ url('/home') }}" class="logo logo-dark text-center">
+                <a href="{{ route('dashboard.inicio') }}" class="logo logo-dark text-center">
                     <span class="logo-sm">
                         <img src="{{ asset('img/Logo/logo-sm.svg') }}" alt="" height="29">
                     </span>

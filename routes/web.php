@@ -1,9 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Rap2hpoutre\FastExcel\FastExcel;
-use App\Models\Estado;
-use App\Models\Municipio;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,24 +14,9 @@ use App\Models\Municipio;
 |
 */
 
-Route::get('/', function () {
-    /* $estados = (new FastExcel)->import('C:\Users\jesus\Documents\BaseDatos\estadosBD.xlsx', function ($line) {
-        return Estado::create([
-            'claveEstado' => $line['Clave'],
-            'codigoEstado' => $line['ISO'],
-            'nombreEstado' => $line['Estado']
-        ]);
-    }); */
-    /* $municipios = (new FastExcel)->import('C:\Users\jesus\Documents\BaseDatos\Estado1.xlsx', function ($line) {
-        return Municipio::create([
-            'claveMunicipio' => $line['Clave'],
-            'nombreMunicipio' => $line['Municipio'],
-            'estado_id' => $line['id']
-        ]);
-    }); */
-    return view('welcome');
+/* Rutas definidas en vendor/laravel/ui/src/AuthRouteMethods */
+Auth::routes(['register' => false]);
+
+Route::middleware(['auth'])->group(function(){
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard.inicio');
 });
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

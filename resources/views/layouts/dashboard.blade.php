@@ -33,32 +33,6 @@
     <div id="wrapper">
         <div class="navbar-custom">
             <ul class="list-unstyled topnav-menu float-end mb-0">
-                
-                <li class="d-none d-lg-block">
-                    <form class="app-search">
-                        @csrf
-                        <div class="app-search-box">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Buscar..." id="top-search">
-                                <button class="btn input-group-text" type="submit">
-                                    <i class="fe-search"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </li>
-
-                <li class="dropdown d-inline-block d-lg-none">
-                    <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                        <i class="fe-search noti-icon"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-lg dropdown-menu-end p-0">
-                        <form class="p-3">
-                            <input type="text" class="form-control" placeholder="Buscar ..." aria-label="Recipient's username">
-                        </form>
-                    </div>
-                </li>
-
                 <li class="dropdown notification-list topbar-dropdown">
                     <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                         <img src="{{ asset('img/Avatars/user-1.jpg') }}" alt="user-image" class="rounded-circle">

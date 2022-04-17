@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Municipio;
 use Illuminate\Http\Request;
+use Response;
+use DataTables;
+use App\Models\Estado;
 
 class MunicipioController extends Controller
 {
@@ -12,9 +15,28 @@ class MunicipioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if ($request->ajax()) {
+            if(!empty($request->filtroEstados))
+            {
+                $estadoOption = Estado::where('nombreEstado',$request->filtroEstados)->first();
+                $data = Municipio::where('estado_id',$estadoOption->id)->get();
+            }
+            else
+            {
+                $data = Municipio::all();
+            }
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('Estado', function(Municipio $municipio){
+                    return $municipio->estados->nombreEstado;
+                })
+                ->make(true);
+        }
+        $data = Municipio::all();
+        $estados = Estado::orderby('nombreEstado','ASC')->get();
+        return view("dashboard.tables.municipios",compact(['data','estados']));
     }
 
     /**

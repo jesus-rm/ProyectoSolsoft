@@ -1,4 +1,8 @@
-/* TABLA PERSONAS */
+/* TABLAS */
+.dataTables_processing.card{
+    background-color: #282e38!important;
+}
+
 .cont-export{
     margin: 25px 0 40px 0;
 }
@@ -15,7 +19,17 @@
     margin-bottom: 40px!important;
 }
 
-.dataTables_filter input{
+.dataTables_filter input,
+#filtroEstados{
     border-radius: 50rem!important;
     box-shadow: 0 2px 4px 0 rgba(15, 15, 15, 0.3)!important;
+}
+
+#filtroEstados {
+    margin-top: 35px;
+}
+
+.btnFiltro{
+    padding: 5px 35px 5px 35px;
+    margin: 10px 0px 30px 0!important;
 }

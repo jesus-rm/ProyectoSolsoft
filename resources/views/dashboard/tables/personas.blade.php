@@ -160,6 +160,7 @@
                     ],
                 }
             } );
+            table.columns.adjust().draw();
         } );
     </script>
 

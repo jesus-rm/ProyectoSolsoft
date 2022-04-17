@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Laravel') }} | @yield('title')</title>
 
     <!-- Scripts -->
     <script src="{{ asset('libs/jquery/jquery-3.6.0.js') }}"></script>
@@ -15,6 +15,7 @@
     <script src="{{ asset('libs/node-waves/waves.min.js') }}"></script>
     <script src="{{ asset('libs/feather-icons/feather.js') }}"></script>
     <script src="{{ asset('js/app.min.js') }}" defer></script>
+    @yield('js')
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -24,7 +25,10 @@
     <link href="{{ asset('css/app.min.css') }}" rel="stylesheet" type="text/css" id="app-style">
     <link href="{{ asset('css/icons.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('css/estilos.css') }}" rel="stylesheet" type="text/css">
+    @yield('css')
+
 </head>
+
 <body class="loading" data-layout-color="dark"  data-layout-mode="default" data-layout-size="fluid" data-topbar-color="dark" data-leftbar-position="fixed" data-leftbar-color="dark" data-leftbar-size='default' data-sidebar-user='true'>
     <div id="wrapper">
         <div class="navbar-custom">
@@ -129,14 +133,15 @@
                         {{ Auth::user()->apellidoMaterno }}</p>
                 </div>
                 @include('dashboard.menuLateral')
-                <div class="clearfix"></div>
             </div>
         </div>
 
         <div class="content-page">
             <div class="content">
                 <div class="container-fluid">
-                    @yield('content')
+                    <div class="app">
+                        @yield('content')
+                    </div>
                 </div>
             </div>
         </div>

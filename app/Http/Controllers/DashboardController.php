@@ -33,11 +33,11 @@ class DashboardController extends Controller
             $totalMunicipios = Municipio::count();
             $totalUsuarios = User::count();
 
-            $estadoSelect = Estado::first(['estadoId', 'nombreEstado']);
+            $estadoSelect = Estado::first(['id', 'nombreEstado']);
 
             if($estadoSelect != null)
             {
-                $idInicial = $estadoSelect->estadoId;
+                $idInicial = $estadoSelect->id;
                 $municipiosEstado = Municipio::where('estado_id',$idInicial)->count();
                 $data[0]= array(
                     'label' => $estadoSelect->nombreEstado,
@@ -45,8 +45,8 @@ class DashboardController extends Controller
                 );
                 
                 for($i=1;$i<$totalEstados;$i++){
-                    $estadoNow = Estado::where('estadoId','>',$idInicial)->orderBy('estadoId','asc')->first(['estadoId', 'nombreEstado']);
-                    $idInicial = $estadoNow->estadoId;
+                    $estadoNow = Estado::where('id','>',$idInicial)->orderBy('id','asc')->first(['id', 'nombreEstado']);
+                    $idInicial = $estadoNow->id;
                     $municipiosNow = Municipio::where('estado_id',$idInicial)->count();
                     $data[$i]= array(
                         'label' => $estadoNow->nombreEstado,

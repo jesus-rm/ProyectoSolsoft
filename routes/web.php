@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PersonaController;
+use App\Http\Controllers\EstadoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,4 +21,6 @@ Auth::routes(['register' => false]);
 
 Route::middleware(['auth'])->group(function(){
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.inicio');
+    Route::get('/personas', [PersonaController::class, 'index'])->name('dashboard.personas');
+    Route::get('/estados', [EstadoController::class, 'index'])->name('dashboard.estados');
 });

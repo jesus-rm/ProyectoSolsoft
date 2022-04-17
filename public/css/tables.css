@@ -1,0 +1,21 @@
+/* TABLA PERSONAS */
+.cont-export{
+    margin: 25px 0 40px 0;
+}
+
+.btn-export{
+    margin: 5px 4px 5px 4px!important;
+    box-shadow: 0 2px 6px 0 rgba(15, 15, 15, 0.3)!important;
+    font-size: 15px!important;
+    line-height: 24px;
+}
+
+.margenFormat {
+    margin-top: 50px!important;
+    margin-bottom: 40px!important;
+}
+
+.dataTables_filter input{
+    border-radius: 50rem!important;
+    box-shadow: 0 2px 4px 0 rgba(15, 15, 15, 0.3)!important;
+}

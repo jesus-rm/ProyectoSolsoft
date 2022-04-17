@@ -26,8 +26,8 @@ return new class extends Migration
             $table->string('email',80)->unique();
             $table->tinyInteger('edad');
             $table->string('password');
-            $table->foreignId('estado_id')->constrained('estados','estadoId')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('municipio_id')->constrained('municipios','municipioId')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('estado_id')->constrained('estados')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('municipio_id')->constrained('municipios')->onDelete('cascade')->onUpdate('cascade');
             $table->string('avatar')->default('default.png');
             $table->dateTime("dateLogin")->nullable();
             $table->timestamp('email_verified_at')->nullable();

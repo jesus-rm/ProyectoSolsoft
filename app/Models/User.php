@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Estado;
+use App\Models\Municipio;
 
 class User extends Authenticatable
 {
@@ -17,7 +19,11 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+
+    protected $table = 'users';
+
     protected $fillable = [
+        'id',
         'nombre',
         'apellidoPaterno',
         'apellidoMaterno',
@@ -55,12 +61,12 @@ class User extends Authenticatable
     ];
 
     //Relacion Uno a Muchos (One to Many) Inversa
-    public function estado(){
-        return $this.belongsTo('App\Models\Estado');
+    public function estados(){
+        return $this->belongsTo(Estado::class,'estado_id');
     }
 
     //Relacion Uno a Muchos (One to Many) Inversa
-    public function municipio(){
-        return $this.belongsTo('App\Models\Municipio');
+    public function municipios(){
+        return $this->belongsTo(Municipio::class,'municipio_id');
     }
 }

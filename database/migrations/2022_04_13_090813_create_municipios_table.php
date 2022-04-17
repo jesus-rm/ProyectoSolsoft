@@ -14,10 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('municipios', function (Blueprint $table) {
-            $table->id('municipioId');
+            $table->id();
             $table->string('claveMunicipio',5);
             $table->string('nombreMunicipio',50);
-            $table->foreignId('estado_id')->constrained('estados','estadoId')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('estado_id')->constrained('estados')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Estado;
 use Illuminate\Http\Request;
+use Response;
+use DataTables;
 
 class EstadoController extends Controller
 {
@@ -12,9 +14,15 @@ class EstadoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $data = Estado::all();
+        if ($request->ajax()) {
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->make(true);
+        }
+        return view("dashboard.tables.estados",compact('data'));
     }
 
     /**

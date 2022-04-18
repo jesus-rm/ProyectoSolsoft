@@ -4,6 +4,47 @@
 
 @section('content')
 
+    <!-- Modal -->
+    <div class="modal fade" id="modalMunicipios" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="modalMunicipiosTitle" aria-modal="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalMunicipiosTitle"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger d-none" role="alert" id="alertMunicipios"></div>
+                    <form id="formularioModal" action="" method="post" enctype="multipart/form-data" class="px-3" role="form" autocomplete="off">
+                        @csrf
+                        <input type="hidden" name="municipioID" id="municipioID" value="">
+                        <div class="mb-3">
+                            <label for="claveEstado">Clave Estado</label>
+                            <select class="form-select" name="claveEstado" id="claveEstado" required>
+                                <option value="" selected id="optionDef">-- Seleccionar --</option>
+                                @foreach($estados as $estadosOption)
+                                    <option value="{{ $estadosOption->id }}">{{ $estadosOption->nombreEstado }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="municipio">Municipio</label>
+                            <input type="text" class="form-control" name="municipio" id="municipio">
+                        </div>
+                        <div class="mb-3">
+                            <label for="claveInegi">Clave (INEGI)</label>
+                            <input type="text" class="form-control" name="claveInegi" id="claveInegi">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="crearMunicipioBtn">Guardar</button>
+                    <button type="button" class="btn btn-primary" id="editarMunicipioBtn">Guardar cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -126,6 +167,12 @@
                                 className: "btn btn-purple btn-export rounded-pill w-md waves-effect waves-light mb-3",
                                 text: '<i class="fas fa-plus"></i> Añadir Municipio',
                                 action: function ( e, dt, node, config ) {
+                                    $('#modalMunicipiosTitle').text('Registrar Municipio');
+                                    $('#formularioModal')[0].reset();
+                                    $('#alertMunicipios').addClass('d-none');
+                                    $('#editarMunicipioBtn').addClass('d-none');
+                                    $('#crearMunicipioBtn').removeClass('d-none');
+                                    $('#modalMunicipios').modal('show');
                                 }
                             },
                             {
@@ -217,6 +264,201 @@
                 $('#optionDef').prop("selected", true);
                 $('#btnResetFiltro').prop("disabled", true);
             });
+
+            //CREAR MUNICIPIO
+            $(document).on('click', '#crearMunicipioBtn', function(event) {
+                event.preventDefault();
+                var dataStr = $('#formularioModal').serialize(); // carga todos los campos para enviarlos
+                if($("#claveEstado").val()==''){
+                    $('#alertMunicipios').html('<i class="mdi mdi-block-helper me-2"></i><strong>¡Error!</strong> ' + 'Debe seleccionar un Estado de la lista');
+                    $('#alertMunicipios').removeClass('d-none');
+                }
+                else
+                {
+                    // AJAX
+                    $.ajax({
+                        method: "POST",
+                        url: "{{ route('municipios.store') }}",
+                        data: dataStr,
+                        dataType: "json",
+                        success: function(data) {
+                            if(data.errors){
+                                $('#alertMunicipios').html('<i class="mdi mdi-block-helper me-2"></i><strong>¡Error!</strong> ' + data.errors[0]);
+                                $('#alertMunicipios').removeClass('d-none');
+                            }else{
+                                $('#modalMunicipios').modal('hide');
+                                $('#formularioModal')[0].reset();
+
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: 'top-end',
+                                    showConfirmButton: false,
+                                    timer: 4000,
+                                    timerProgressBar: true,
+                                });
+                                Toast.fire({
+                                    icon: 'success',
+                                    title: 'Municipio guardado',
+                                });
+
+                                $('#municipiosList').DataTable().clear().destroy();
+                                fill_datatable(filtroEstados);
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.log(error);
+
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 4000,
+                                timerProgressBar: true,
+                            });
+                            Toast.fire({
+                                icon: 'error',
+                                title: 'Ha ocurrido un error inesperado. Inténtalo más tarde',
+                            });
+                        }
+                    });
+                }
+                
+            });
+
+            //VER MUNICIPIO EN MODAL
+            $(document).on('click','#showMunicipioBtn', function() {
+                var municipioID = $(this).data('id'); //Obtener el id del boton al ser presionado
+                $.ajax({
+                    method: "POST",
+                    url: "{{ route('municipios.show') }}",
+                    data: {_token: "{{ csrf_token() }}",id: municipioID},
+                    dataType: "json",
+                    success: function(data) {
+                        $('#formularioModal')[0].reset();
+                        $('#municipioID').val(data.details.id);
+                        $('#claveEstado').val(data.details.estado_id);
+                        $('#municipio').val(data.details.nombreMunicipio);
+                        $('#claveInegi').val(data.details.claveMunicipio);
+                        $('#modalMunicipiosTitle').text('Editar Municipio');
+                        $('#alertMunicipios').addClass('d-none');
+                        $('#crearMunicipioBtn').addClass('d-none');
+                        $('#editarMunicipioBtn').removeClass('d-none');
+                        $('#modalMunicipios').modal('show');
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error);
+                    }
+                });
+            });
+
+            //EDITAR Y ACTUALIZAR ESTADOS
+            $(document).on('click', '#editarMunicipioBtn', function() {
+                event.preventDefault();
+                var dataStr = $('#formularioModal').serialize(); // carga todos los campos para enviarlos
+                var estadoID = $("#municipioID").val();
+                if($("#claveEstado").val()==''){
+                    $('#alertMunicipios').html('<i class="mdi mdi-block-helper me-2"></i><strong>¡Error!</strong> ' + 'Debe seleccionar un Estado de la lista');
+                    $('#alertMunicipios').removeClass('d-none');
+                }
+                else
+                {
+                    // AJAX
+                    $.ajax({
+                        method: "POST",
+                        url: "{{ url('municipios/actualizar') }}"+'/'+municipioID,
+                        data: dataStr,
+                        dataType: "json",
+                        success: function(data) {
+                            if(data.errors){
+                                $('#alertMunicipios').html('<i class="mdi mdi-block-helper me-2"></i><strong>¡Error!</strong> ' + data.errors[0]);
+                                $('#alertMunicipios').removeClass('d-none');
+                            }else{
+                                $('#modalMunicipios').modal('hide');
+                                $('#formularioModal')[0].reset();
+
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: 'top-end',
+                                    showConfirmButton: false,
+                                    timer: 4000,
+                                    timerProgressBar: true,
+                                });
+                                Toast.fire({
+                                    icon: 'success',
+                                    title: 'Cambios guardados con éxito',
+                                });
+                                
+                                $('#municipiosList').DataTable().clear().destroy();
+                                fill_datatable(filtroEstados);
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            alert(error);
+
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 4000,
+                                timerProgressBar: true,
+                            });
+                            Toast.fire({
+                                icon: 'error',
+                                title: 'Ha ocurrido un error inesperado. Inténtalo más tarde',
+                            });
+                        }
+                    });
+                }
+            });
+
+            //ELIMINAR ESTADOS
+            $(document).on('click','#deleteMunicipioBtn', function() {
+                var municipioID = $(this).data('id'); //Obtener el id del boton al ser presionado
+                var url = "{{ url('municipios/eliminar') }}"+'/'+municipioID;
+
+                Swal.fire({
+                    title: 'Eliminar Municipio',
+                    text: "¿Está seguro? No se podrá revertir esta acción",
+                    icon: 'warning',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    returnFocus: false,
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    cancelButtonText: 'Cancelar',
+                    confirmButtonText: 'Sí, eliminar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        //AJAX
+                        $.ajax({
+                            method: "POST",
+                            url: url,
+                            data: {_token: "{{ csrf_token() }}",id: municipioID},
+                            dataType: "json",
+                            success: function(data) {
+                                Swal.fire(
+                                    '¡Eliminado!',
+                                    'El Municipio ha sido eliminado',
+                                    'success'
+                                ).then((result) => {
+                                    $('#municipiosList').DataTable().clear().destroy();
+                                    fill_datatable(filtroEstados);
+                                })
+                            },
+                            error: function(xhr, status, error) {
+                                console.log(error);
+                                Swal.fire(
+                                    '¡Error!',
+                                    'Ha ocurrido un error inesperado. Inténtalo más tarde',
+                                    'error'
+                                )
+                            }
+                        });
+                    }
+                })
+            });
+            
         } );
     </script>
 

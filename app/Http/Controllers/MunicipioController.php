@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Response;
 use DataTables;
 use App\Models\Estado;
+use Illuminate\Support\Facades\Validator;
 
 class MunicipioController extends Controller
 {
@@ -41,7 +42,7 @@ class MunicipioController extends Controller
                 ->make(true);
         }
         $data = Municipio::select('id','nombreMunicipio','claveMunicipio','estado_id')->get();
-        $estados = Estado::select('nombreEstado')->orderby('nombreEstado','ASC')->get();
+        $estados = Estado::select('id','nombreEstado')->orderby('nombreEstado','ASC')->get();
         return view("dashboard.tables.municipios",compact(['data','estados']));
     }
 
@@ -63,7 +64,27 @@ class MunicipioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = array(
+            'municipio' => 'required|min:8|max:50',
+            'claveInegi' => 'required|max:4',
+            'claveEstado' => 'required'
+        );
+
+        $error = Validator::make($request->all(), $rules);
+
+        if($error->fails()){
+            return response()->json(['errors' => $error->errors()->all()]);
+        }
+
+        if($request->ajax()){
+            $newMunicipio = new Municipio;
+            $newMunicipio->nombreMunicipio = $request->input('municipio');
+            $newMunicipio->claveMunicipio = $request->input('claveInegi');
+            $newMunicipio->estado_id = $request->input('claveEstado');
+            $newMunicipio->save();
+            return response()->json(
+                $newMunicipio->toArray());
+        }
     }
 
     /**
@@ -72,9 +93,11 @@ class MunicipioController extends Controller
      * @param  \App\Models\Municipio  $municipio
      * @return \Illuminate\Http\Response
      */
-    public function show(Municipio $municipio)
+    public function show(Request $request)
     {
-        //
+        $municipioID = $request->id;
+        $municipio = Municipio::find($municipioID);
+        return response()->json(['details'=>$municipio]);
     }
 
     /**
@@ -97,17 +120,40 @@ class MunicipioController extends Controller
      */
     public function update(Request $request, Municipio $municipio)
     {
-        //
+        $rules = array(
+            'municipio' => 'required|min:8|max:50',
+            'claveInegi' => 'required|max:4',
+            'claveEstado' => 'required'
+        );
+
+        $error = Validator::make($request->all(), $rules);
+
+        if($error->fails()){
+            return response()->json(['errors' => $error->errors()->all()]);
+        }
+
+        if($request->ajax()){
+            $municipioEdit = Municipio::find($request->input('municipioID'));
+            $municipioEdit->nombreMunicipio = $request->input('municipio');
+            $municipioEdit->claveMunicipio = $request->input('claveInegi');
+            $municipioEdit->estado_id = $request->input('claveEstado');
+            $municipioEdit->save();
+            return response()->json(
+                $municipioEdit->toArray());
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Municipio  $municipio
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Municipio $municipio)
+    public function destroy(Request $request)
     {
-        //
+        $municipioID = $request->id;
+        $municipioDelete = Municipio::find($municipioID)->delete();
+        return response()->json(['msg'=>'Eliminado']);
     }
 }

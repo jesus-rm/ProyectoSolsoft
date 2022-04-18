@@ -21,10 +21,10 @@
                                         <thead class="thead-light">
                                             <tr>
                                                 <th class="ebz-table" scope="col" width="10%">Id</th>
-                                                <th class="ebz-table" scope="col" width="40%">Estado</th>
-                                                <th class="ebz-table" scope="col" width="25%">Clave INEGI</th>
-                                                <th class="ebz-table" scope="col" width="25%">Código ISO</th>
-                                                <!-- <th class="ebz-table arrow-edit" scope="col">Acción</th> -->
+                                                <th class="ebz-table" scope="col" width="28%">Estado</th>
+                                                <th class="ebz-table" scope="col" width="24%">Clave INEGI</th>
+                                                <th class="ebz-table" scope="col" width="24%">Código ISO</th>
+                                                <th class="ebz-table" scope="col" width="14%">Acción</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -44,7 +44,9 @@
                 processing: true,
                 serverSide: true,
                 scrollX: true,
+                deferRender: true,
                 autoWidth: false,
+                stateSave: true,
                 language: {
                     url: "//cdn.datatables.net/plug-ins/1.11.5/i18n/es-MX.json"
                 },
@@ -76,6 +78,12 @@
                         "name": "codigoEstado",
                         "searchable": true,
                         "orderable": true
+                    },
+                    {
+                        "data": 'action',
+                        "name": "action",
+                        "searchable": false,
+                        "orderable": false
                     }
                 ],
                 lengthMenu: [ [6, 12, 18, 24, -1], [6, 12, 18, 24, "Todos"] ],
@@ -103,23 +111,28 @@
                             fieldBoundary: '',
                             bom: true,
                             className: "btn btn-success btn-export rounded-pill w-md waves-effect waves-light mb-3",
-                            text: '<i class="fas fa-file-csv"></i> CSV',
+                            text: '<i class="mdi mdi-file-table"></i> CSV',
                             exportOptions: {
                                 "columns": ":visible"
                             }
                         },
                         {
                             extend: "print",
-                            className: "btn btn-white btn-export rounded-pill w-md waves-effect waves-light mb-3",
-                            text: '<i class="fas fa-print"></i> Imprimir',
+                            className: "btn btn-secondary btn-export rounded-pill w-md waves-effect waves-light mb-3",
+                            text: '<i class="mdi mdi-printer"></i> Imprimir',
                             exportOptions: {
                                 "columns": ":visible"
                             }
+                        },
+                        {
+                            extend: 'colvis',
+                            className: "btn btn-white btn-export rounded-pill w-md waves-effect waves-light mb-3",
+                            text: '<i class="mdi mdi-format-columns"></i> Columnas',
+                            collectionLayout: 'fixed columns'
                         }
                     ],
                 }
-            } );
-            table.columns.adjust().draw();
+            } ).clear().draw();
         } );
     </script>
 
@@ -138,4 +151,5 @@
     <script src="{{ asset('libs/datatables/js/buttons/buttons.bootstrap5.min.js') }}"></script>
     <script src="{{ asset('libs/datatables/js/buttons/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('libs/datatables/js/buttons/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('libs/datatables/js/buttons/buttons.colVis.min.js') }}"></script>
 @stop

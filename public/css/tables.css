@@ -1,5 +1,13 @@
-/* TABLAS */
-.dataTables_processing.card{
+/* ==========================================================================
+   ESTILOS PARA TABLAS Y FORMULARIOS
+   ========================================================================== */
+
+/* ----------------------------------------------------------------
+   Estilos -> Opciones parte superior de las tablas
+   ---------------------------------------------------------------- */
+.dataTables_processing.card,
+.swal2-popup,
+.dt-button-collection{
     background-color: #282e38!important;
 }
 
@@ -19,6 +27,9 @@
     margin-bottom: 40px!important;
 }
 
+/* ----------------------------------------------------------------
+   Estilos -> Filtro dinámico
+   ---------------------------------------------------------------- */
 .dataTables_filter input,
 #filtroEstados{
     border-radius: 50rem!important;
@@ -33,3 +44,7 @@
     padding: 5px 35px 5px 35px;
     margin: 10px 0px 30px 0!important;
 }
+
+/* ----------------------------------------------------------------
+   Estilos -> Ventanas Modal
+   ---------------------------------------------------------------- */

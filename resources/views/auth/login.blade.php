@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-6 col-xl-4">
+        <div class="col-md-8 col-lg-6 col-xl-4 textAuth">
             <div class="text-center">   
                 <a href="{{ route('login') }}">
                     <img src="{{ asset('img/Logo/logo-light.svg') }}" alt="" height="29" class="mx-auto">
@@ -36,15 +36,6 @@
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
-                        </div>
-
-                        <div class="mb-3">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                <label class="form-check-label" for="remember">
-                                    {{ __('Remember Me') }}
-                                </label>
-                            </div>
                         </div>
 
                         <div class="mb-3 d-grid text-center">

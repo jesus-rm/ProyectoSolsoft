@@ -18,15 +18,21 @@ class PersonaController extends Controller
      */
     public function index(Request $request)
     {
-        $data = User::all();
+        $data = User::select('id','nombre','apellidoPaterno','apellidoMaterno','fechaNacimiento','edad','rfc','curp','email','telefono','celular','estado_id','municipio_id')->get();
         if ($request->ajax()) {
             return Datatables::of($data)
                 ->addColumn('Estado', function(User $user){
-                    return $user->estados->nombreEstado;
+                    return $user->estados->codigoEstado;
                 })
                 ->addColumn('Municipio', function(User $user){
                     return $user->municipios->nombreMunicipio;
                 })
+                ->addColumn('action', function(User $user){
+                    $btn = '<a href="javascript:void(0)" data-id="'.$user->id.'" data-original-title="Editar" class="btn btn-primary" id="showUserBtn"><i class="fas fa-edit"></i></a>';
+                    $btn = $btn.' <a href="javascript:void(0)" data-id="'.$user->id.'" data-original-title="Eliminar" class="btn btn-danger" id="deleteUserBtn"><i class="fas fa-trash"></i></a>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
                 ->addIndexColumn()
                 ->make(true);
         }

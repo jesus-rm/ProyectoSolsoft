@@ -17816,12 +17816,12 @@ body[data-layout-color=dark] .text-blue {
 .authentication-bg.enlarged {
 	min-height: 100px
 }
-
+/* 
 body.authentication-bg {
 	background-image: url(../img/Illustrations/background.jpg);
 	background-size: cover;
 	background-position: center;
-}
+} */
 
 .logout-icon {
 	width: 140px

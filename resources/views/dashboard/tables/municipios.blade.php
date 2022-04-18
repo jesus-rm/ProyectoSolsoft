@@ -17,15 +17,19 @@
                         <div class="row justify-content-center">
                             <div class="col-md-6">
                                 <select class="form-select" name="filtroEstados" id="filtroEstados" required>
-                                    <option value="" selected>-- Seleccionar Estado --</option>
+                                    <option value="" selected id="optionDef">-- Seleccionar Estado --</option>
                                     @foreach($estados as $estadosOption)
                                         <option value="{{ $estadosOption->nombreEstado }}">{{ $estadosOption->nombreEstado }}</option>
                                     @endforeach
                                 </select>
                                 <div align="center">
-                                    <button class="btn btn-purple btnFiltro btn-export rounded-pill w-md waves-effect waves-light mb-3" type="button" name="btnFiltro" id="btnFiltro">
+                                    <button class="btn btn-purple btnFiltro btn-export rounded-pill w-md waves-effect waves-light mb-3" type="button" name="btnFiltro" id="btnFiltro" >
                                         <i class="mdi mdi-filter"></i>
                                         Filtrar
+                                    </button>
+                                    <button class="btn btn-danger btnFiltro btn-export rounded-pill w-md waves-effect waves-light mb-3" type="button" name="btnResetFiltro" id="btnResetFiltro" disabled>
+                                        <i class="mdi mdi-filter-remove"></i>
+                                        Reset
                                     </button>
                                 </div>
                             </div>
@@ -35,10 +39,10 @@
                                         <thead class="thead-light">
                                             <tr>
                                                 <th class="ebz-table" scope="col" width="10%">Id</th>
-                                                <th class="ebz-table" scope="col" width="40%">Municipio</th>
-                                                <th class="ebz-table" scope="col" width="25%">Clave INEGI</th>
-                                                <th class="ebz-table" scope="col" width="25%">Estado</th>
-                                                <!-- <th class="ebz-table arrow-edit" scope="col">Acción</th> -->
+                                                <th class="ebz-table" scope="col" width="28%">Municipio</th>
+                                                <th class="ebz-table" scope="col" width="20%">Clave INEGI</th>
+                                                <th class="ebz-table" scope="col" width="28%">Estado</th>
+                                                <th class="ebz-table" scope="col" width="14%">Acción</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -54,13 +58,17 @@
     <!-- DATA TABLE -->
     <script type="text/javascript">
         $(document).ready(function() {
+
             fill_datatable();
+            
             function fill_datatable(filtroEstados='') {
                 var table = $('#municipiosList').DataTable( {
                     processing: true,
                     serverSide: true,
                     scrollX: true,
+                    deferRender: true,
                     autoWidth: false,
+                    stateSave: true,
                     language: {
                         url: "//cdn.datatables.net/plug-ins/1.11.5/i18n/es-MX.json"
                     },
@@ -95,6 +103,12 @@
                             "name": "Estado.nombreEstado",
                             "searchable": false,
                             "orderable": true
+                        },
+                        {
+                            "data": 'action',
+                            "name": "action",
+                            "searchable": false,
+                            "orderable": false
                         }
                     ],
                     lengthMenu: [ [10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"] ],
@@ -122,34 +136,86 @@
                                 fieldBoundary: '',
                                 bom: true,
                                 className: "btn btn-success btn-export rounded-pill w-md waves-effect waves-light mb-3",
-                                text: '<i class="fas fa-file-csv"></i> CSV',
+                                text: '<i class="mdi mdi-file-table"></i> CSV',
                                 exportOptions: {
                                     "columns": ":visible"
                                 }
                             },
                             {
                                 extend: "print",
-                                className: "btn btn-white btn-export rounded-pill w-md waves-effect waves-light mb-3",
-                                text: '<i class="fas fa-print"></i> Imprimir',
+                                className: "btn btn-secondary btn-export rounded-pill w-md waves-effect waves-light mb-3",
+                                text: '<i class="mdi mdi-printer"></i> Imprimir',
                                 exportOptions: {
                                     "columns": ":visible"
                                 }
+                            },
+                            {
+                                extend: 'colvis',
+                                className: "btn btn-white btn-export rounded-pill w-md waves-effect waves-light mb-3",
+                                text: '<i class="mdi mdi-format-columns"></i> Columnas',
+                                collectionLayout: 'fixed columns'
                             }
                         ],
                     }
                 } ).clear().draw();
             }
+
             $('#btnFiltro').click(function(){
                 var filtroEstados = $('#filtroEstados').val();
                 if(filtroEstados != '')
                 {
                     $('#municipiosList').DataTable().destroy();
                     fill_datatable(filtroEstados);
+
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true
+                    })
+
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Filtrado completado'
+                    })
+                    $('#btnResetFiltro').removeAttr('disabled');
                 }
                 else
                 {
-                    alert("Selecciona un Estado");
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true
+                    })
+
+                    Toast.fire({
+                        icon: 'info',
+                        title: 'Seleccione un Estado'
+                    })
                 }
+            });
+
+            $('#btnResetFiltro').click(function(){
+                var filtroEstados = '';
+                $('#municipiosList').DataTable().clear().destroy();
+                fill_datatable(filtroEstados);
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true
+                })
+
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Filtrado removido'
+                })
+                $('#optionDef').prop("selected", true);
+                $('#btnResetFiltro').prop("disabled", true);
             });
         } );
     </script>
@@ -169,4 +235,5 @@
     <script src="{{ asset('libs/datatables/js/buttons/buttons.bootstrap5.min.js') }}"></script>
     <script src="{{ asset('libs/datatables/js/buttons/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('libs/datatables/js/buttons/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('libs/datatables/js/buttons/buttons.colVis.min.js') }}"></script>
 @stop

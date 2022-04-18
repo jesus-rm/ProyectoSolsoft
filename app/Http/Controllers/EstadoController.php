@@ -16,10 +16,16 @@ class EstadoController extends Controller
      */
     public function index(Request $request)
     {
-        $data = Estado::all();
+        $data = Estado::select('id','nombreEstado','claveEstado','codigoEstado')->get();
         if ($request->ajax()) {
             return Datatables::of($data)
                 ->addIndexColumn()
+                ->addColumn('action', function($row){
+                    $btn = '<a href="javascript:void(0)" data-id="'.$row->id.'" data-original-title="Editar" class="btn btn-primary" id="showEstadoBtn"><i class="fas fa-edit"></i></a>';
+                    $btn = $btn.' <a href="javascript:void(0)" data-id="'.$row->id.'" data-original-title="Eliminar" class="btn btn-danger" id="deleteEstadoBtn"><i class="fas fa-trash"></i></a>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
                 ->make(true);
         }
         return view("dashboard.tables.estados",compact('data'));

@@ -14,6 +14,7 @@
     <script src="{{ asset('libs/bootstrap/bootstrap.bundle.js') }}"></script>
     <script src="{{ asset('libs/node-waves/waves.min.js') }}"></script>
     <script src="{{ asset('libs/feather-icons/feather.js') }}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('js/app.min.js') }}" defer></script>
     @yield('js')
 
@@ -101,10 +102,13 @@
 
                 <div class="user-box text-center">
                     <img src="{{ asset('img/Avatars/user-1.jpg') }}" alt="user-img" title="Mat Helme" class="rounded-circle img-thumbnail avatar-md">
-                    <p class="text-muted left-user-info">
+                    <p class="nameUserLeft">
                         {{ Auth::user()->nombre }}
+                    </p>
+                    <p class="apellUserLeft">
                         {{ Auth::user()->apellidoPaterno }}
-                        {{ Auth::user()->apellidoMaterno }}</p>
+                        {{ Auth::user()->apellidoMaterno }}
+                    </p>
                 </div>
                 @include('dashboard.menuLateral')
             </div>

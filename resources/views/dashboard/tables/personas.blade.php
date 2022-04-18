@@ -16,20 +16,23 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="table-responsive">
-                                    <table id="usersList" class="table table-bordered yajra-datatable">
+                                    <table id="usersList" class="table table-hover table-bordered yajra-datatable">
                                         <thead class="thead-light">
                                             <tr>
-                                                <th class="ebz-table" scope="col" width="7%">Id</th>
-                                                <th class="ebz-table arrow-edit" scope="col">Nombre(s)</th>
-                                                <th class="ebz-table arrow-edit" scope="col">Apellido Paterno</th>
-                                                <th class="ebz-table arrow-edit" scope="col">Apellido Materno</th>
-                                                <th class="ebz-table arrow-edit" scope="col">Fecha de Nacimiento</th>
-                                                <th class="ebz-table arrow-edit" scope="col">RFC</th>
-                                                <th class="ebz-table arrow-edit" scope="col">CURP</th>
-                                                <th class="ebz-table arrow-edit" scope="col">Correo</th>
-                                                <th class="ebz-table arrow-edit" scope="col">Estado</th>
-                                                <th class="ebz-table arrow-edit" scope="col">Municipio</th>
-                                                <!-- <th class="ebz-table arrow-edit" scope="col">Acción</th> -->
+                                                <th class="ebz-table" scope="col">Id</th>
+                                                <th class="ebz-table" scope="col">Nombre(s)</th>
+                                                <th class="ebz-table" scope="col">Apellido Paterno</th>
+                                                <th class="ebz-table" scope="col">Apellido Materno</th>
+                                                <th class="ebz-table" scope="col">Fecha de Nacimiento</th>
+                                                <th class="ebz-table" scope="col">Edad</th>
+                                                <th class="ebz-table" scope="col">CURP</th>
+                                                <th class="ebz-table" scope="col">RFC</th>
+                                                <th class="ebz-table" scope="col">Estado</th>
+                                                <th class="ebz-table" scope="col">Municipio</th>
+                                                <th class="ebz-table" scope="col">Correo</th>
+                                                <th class="ebz-table" scope="col">Teléfono</th>
+                                                <th class="ebz-table" scope="col">Celular</th>
+                                                <th class="ebz-table" scope="col">Acción</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -50,6 +53,9 @@
                 processing: true,
                 serverSide: true,
                 scrollX: true,
+                deferRender: true,
+                autoWidth: false,
+                stateSave: true,
                 language: {
                     url: "//cdn.datatables.net/plug-ins/1.11.5/i18n/es-MX.json"
                 },
@@ -89,9 +95,9 @@
                         "orderable": true
                     },
                     {
-                        "data": 'rfc',
-                        "name": "rfc",
-                        "searchable": true,
+                        "data": 'edad',
+                        "name": "edad",
+                        "searchable": false,
                         "orderable": true
                     },
                     {
@@ -101,8 +107,8 @@
                         "orderable": true
                     },
                     {
-                        "data": 'email',
-                        "name": "email",
+                        "data": 'rfc',
+                        "name": "rfc",
                         "searchable": true,
                         "orderable": true
                     },
@@ -117,6 +123,30 @@
                         "name": "Municipio.nombreMunicipio",
                         "searchable": true,
                         "orderable": true
+                    },
+                    {
+                        "data": 'email',
+                        "name": "email",
+                        "searchable": true,
+                        "orderable": true
+                    },
+                    {
+                        "data": 'telefono',
+                        "name": "telefono",
+                        "searchable": true,
+                        "orderable": false
+                    },
+                    {
+                        "data": 'celular',
+                        "name": "celular",
+                        "searchable": true,
+                        "orderable": false
+                    },
+                    {
+                        "data": 'action',
+                        "name": "action",
+                        "searchable": false,
+                        "orderable": false
                     }
                 ],
                 lengthMenu: [ [10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"] ],
@@ -144,23 +174,28 @@
                             fieldBoundary: '',
                             bom: true,
                             className: "btn btn-success btn-export rounded-pill w-md waves-effect waves-light mb-3",
-                            text: '<i class="fas fa-file-csv"></i> CSV',
+                            text: '<i class="mdi mdi-file-table"></i> CSV',
                             exportOptions: {
                                 "columns": ":visible"
                             }
                         },
                         {
                             extend: "print",
-                            className: "btn btn-white btn-export rounded-pill w-md waves-effect waves-light mb-3",
-                            text: '<i class="fas fa-print"></i> Imprimir',
+                            className: "btn btn-secondary btn-export rounded-pill w-md waves-effect waves-light mb-3",
+                            text: '<i class="mdi mdi-printer"></i> Imprimir',
                             exportOptions: {
                                 "columns": ":visible"
                             }
+                        },
+                        {
+                            extend: 'colvis',
+                            className: "btn btn-white btn-export rounded-pill w-md waves-effect waves-light mb-3",
+                            text: '<i class="mdi mdi-format-columns"></i> Columnas',
+                            collectionLayout: 'fixed columns'
                         }
                     ],
                 }
-            } );
-            table.columns.adjust().draw();
+            } ).clear().draw();
         } );
     </script>
 
@@ -179,4 +214,5 @@
     <script src="{{ asset('libs/datatables/js/buttons/buttons.bootstrap5.min.js') }}"></script>
     <script src="{{ asset('libs/datatables/js/buttons/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('libs/datatables/js/buttons/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('libs/datatables/js/buttons/buttons.colVis.min.js') }}"></script>
 @stop

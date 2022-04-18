@@ -20,22 +20,28 @@ class MunicipioController extends Controller
         if ($request->ajax()) {
             if(!empty($request->filtroEstados))
             {
-                $estadoOption = Estado::where('nombreEstado',$request->filtroEstados)->first();
-                $data = Municipio::where('estado_id',$estadoOption->id)->get();
+                $estadoOption = Estado::where('nombreEstado',$request->filtroEstados)->value('id');
+                $data = Municipio::where('estado_id',$estadoOption)->select('id','nombreMunicipio','claveMunicipio','estado_id')->get();
             }
             else
             {
-                $data = Municipio::all();
+                $data = Municipio::select('id','nombreMunicipio','claveMunicipio','estado_id')->get();
             }
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('Estado', function(Municipio $municipio){
                     return $municipio->estados->nombreEstado;
                 })
+                ->addColumn('action', function(Municipio $municipio){
+                    $btn = '<a href="javascript:void(0)" data-id="'.$municipio->id.'" data-original-title="Editar" class="btn btn-primary" id="showMunicipioBtn"><i class="fas fa-edit"></i></a>';
+                    $btn = $btn.' <a href="javascript:void(0)" data-id="'.$municipio->id.'" data-original-title="Eliminar" class="btn btn-danger" id="deleteMunicipioBtn"><i class="fas fa-trash"></i></a>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
                 ->make(true);
         }
-        $data = Municipio::all();
-        $estados = Estado::orderby('nombreEstado','ASC')->get();
+        $data = Municipio::select('id','nombreMunicipio','claveMunicipio','estado_id')->get();
+        $estados = Estado::select('nombreEstado')->orderby('nombreEstado','ASC')->get();
         return view("dashboard.tables.municipios",compact(['data','estados']));
     }
 

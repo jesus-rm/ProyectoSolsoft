@@ -6,6 +6,7 @@ use App\Models\Estado;
 use Illuminate\Http\Request;
 use Response;
 use DataTables;
+use Illuminate\Support\Facades\Validator;
 
 class EstadoController extends Controller
 {
@@ -49,7 +50,27 @@ class EstadoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = array(
+            'estado' => 'required|min:8|max:35',
+            'claveInegi' => 'required|max:4',
+            'codigoIso' => 'required|max:4'
+        );
+
+        $error = Validator::make($request->all(), $rules);
+
+        if($error->fails()){
+            return response()->json(['errors' => $error->errors()->all()]);
+        }
+
+        if($request->ajax()){
+            $newEstado = new Estado;
+            $newEstado->nombreEstado = $request->input('estado');
+            $newEstado->claveEstado = $request->input('claveInegi');
+            $newEstado->codigoEstado = $request->input('codigoIso');
+            $newEstado->save();
+            return response()->json(
+                $newEstado->toArray());
+        }
     }
 
     /**
@@ -58,9 +79,11 @@ class EstadoController extends Controller
      * @param  \App\Models\Estado  $estado
      * @return \Illuminate\Http\Response
      */
-    public function show(Estado $estado)
+    public function show(Request $request)
     {
-        //
+        $estadoID = $request->id;
+        $estado = Estado::find($estadoID);
+        return response()->json(['details'=>$estado]);
     }
 
     /**
@@ -83,17 +106,40 @@ class EstadoController extends Controller
      */
     public function update(Request $request, Estado $estado)
     {
-        //
+        $rules = array(
+            'estado' => 'required|min:8|max:35',
+            'claveInegi' => 'required|max:4',
+            'codigoIso' => 'required|max:4'
+        );
+
+        $error = Validator::make($request->all(), $rules);
+
+        if($error->fails()){
+            return response()->json(['errors' => $error->errors()->all()]);
+        }
+
+        if($request->ajax()){
+            $estadoEdit = Estado::find($request->input('estadoID'));
+            $estadoEdit->nombreEstado = $request->input('estado');
+            $estadoEdit->claveEstado = $request->input('claveInegi');
+            $estadoEdit->codigoEstado = $request->input('codigoIso');
+            $estadoEdit->save();
+            return response()->json(
+                $estadoEdit->toArray());
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Estado  $estado
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Estado $estado)
+    public function destroy(Request $request)
     {
-        //
+        $estadoID = $request->id;
+        $estadoDelete = Estado::find($estadoID)->delete();
+        return response()->json(['msg'=>'Eliminado']);
     }
 }

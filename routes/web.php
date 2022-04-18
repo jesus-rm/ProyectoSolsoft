@@ -23,6 +23,12 @@ Auth::routes(['register' => false]);
 Route::middleware(['auth'])->group(function(){
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.inicio');
     Route::get('/personas', [PersonaController::class, 'index'])->name('dashboard.personas');
+
     Route::get('/estados', [EstadoController::class, 'index'])->name('dashboard.estados');
+    Route::post('estados/crear', [EstadoController::class, 'store'])->name("estados.store");
+    Route::post('estados/mostrar', [EstadoController::class, 'show'])->name("estados.show");
+    Route::post("estados/actualizar/{id}",[EstadoController::class, 'update']);
+    Route::post('estados/eliminar/{id}', [EstadoController::class, 'destroy']);
+    
     Route::get('/municipios', [MunicipioController::class, 'index'])->name('dashboard.municipios');
 });

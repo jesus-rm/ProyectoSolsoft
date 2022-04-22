@@ -8,6 +8,7 @@ use DataTables;
 use App\Models\User;
 use App\Models\Estado;
 use App\Models\Municipio;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class PersonaController extends Controller
@@ -82,7 +83,7 @@ class PersonaController extends Controller
             $newPersona->celular = $request->input('celular');
             $newPersona->email = $request->input('correo');
             $newPersona->edad = $request->input('edad');
-            $newPersona->password = $request->input('passw');
+            $newPersona->password = Hash::make($request->input('passw'));
             $newPersona->estado_id = $request->input('claveInegiE');
             $newPersona->municipio_id = $request->input('claveInegiM');
             $newPersona->save();
